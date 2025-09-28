@@ -27,7 +27,7 @@ func TestMain(m *testing.M) {
 		useContainer   bool
 		containerImage string
 	)
-	flag.BoolVar(&useContainer, "container", false, "Use container image.")
+	flag.BoolVar(&useContainer, "container", true, "Use container image.")
 	flag.StringVar(&containerImage, "container-image", "", "Container image.")
 	flag.Parse()
 	var err error
