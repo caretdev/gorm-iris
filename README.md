@@ -38,7 +38,7 @@ package main
 import (
     "fmt"
     "gorm.io/gorm"
-    "github.com/caretdev/gorm-iris/iris" // import dialect
+    iris "github.com/caretdev/gorm-iris" // import dialect
 )
 
 type Person struct {
@@ -47,7 +47,7 @@ type Person struct {
 }
 
 func main() {
-    dsn := "iris://_SYSTEM:SYS@localhost:1972/USER?sslmode=disable"
+    dsn := "iris://_SYSTEM:SYS@localhost:1972/USER"
     db, err := gorm.Open(iris.Open(dsn), &gorm.Config{})
     if err != nil { panic(err) }
 

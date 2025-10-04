@@ -248,6 +248,42 @@ func (stmt DopeWriter) WriteByte(c byte) error {
 
 func (dialector Dialector) ClauseBuilders() map[string]ClauseBuilder {
 	clauseBuilders := map[string]ClauseBuilder{
+		"WHERE": func(c Clause, builder Builder) {
+			if where, ok := c.Expression.(Where); ok && len(where.Exprs) > 0 {
+				var exprs = where.Exprs
+				for idx, expr := range where.Exprs {
+					// Replace multicolumn IN with AND
+					if in, ok := expr.(IN); ok {
+						if columns, ok := in.Column.([]Column); ok {
+							var values = in.Values[0].([]interface{})
+							if len(columns) == len(values) {
+								var newExprs = make([]Expression, len(columns))
+								for i := 0; i < len(columns); i++ {
+									newExprs[i] = Eq{
+										Column: columns[i],
+										Value: values[i],
+									}
+								}
+								exprs[idx] = AndConditions{
+									Exprs: newExprs,
+								}
+							}
+						}
+					}
+				}
+			}
+			c.Build(builder)
+		},
+		"INSERT": func(c Clause, builder Builder) {
+			if insert, ok := c.Expression.(Insert); ok {
+				builder.WriteString("INSERT OR UPDATE ")
+				if insert.Table.Name == "" {
+					builder.WriteQuoted(currentTable)
+				} else {
+					builder.WriteQuoted(insert.Table)
+				}
+			}
+		},
 		"VALUES": func(c Clause, builder Builder) {
 			var dopeWriter = DopeWriter{}
 			if values, ok := c.Expression.(Values); ok {
@@ -369,4 +405,14 @@ func (dialector Dialector) ClauseBuilders() map[string]ClauseBuilder {
 	}
 
 	return clauseBuilders
+}
+
+func (dialector Dialector) SavePoint(tx *gorm.DB, name string) error {
+	tx.Exec("SAVEPOINT " + name)
+	return nil
+}
+
+func (dialector Dialector) RollbackTo(tx *gorm.DB, name string) error {
+	tx.Exec("ROLLBACK TO SAVEPOINT " + name)
+	return nil
 }

@@ -3,7 +3,7 @@ module github.com/caretdev/gorm-iris
 go 1.24.4
 
 require (
-	github.com/caretdev/go-irisnative v0.2.0
+	github.com/caretdev/go-irisnative v0.2.1
 	gorm.io/gorm v1.31.0
 )
 
