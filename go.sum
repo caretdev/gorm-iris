@@ -1,5 +1,5 @@
-github.com/caretdev/go-irisnative v0.2.0 h1:BNA/vn157I4LjmlN4y55eRflpdOc8oljOR33Y74WL/M=
-github.com/caretdev/go-irisnative v0.2.0/go.mod h1:hyDEsJMbO0Bn/eE7KdSdNSmahe9Sji2z3TPQwKzoPqA=
+github.com/caretdev/go-irisnative v0.2.1 h1:7/raCSSr7rgX2OBWD/CpVngtEdFm0dHQVmvX5FTGMyY=
+github.com/caretdev/go-irisnative v0.2.1/go.mod h1:hyDEsJMbO0Bn/eE7KdSdNSmahe9Sji2z3TPQwKzoPqA=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/jinzhu/inflection v1.0.0 h1:K317FqzuhWc8YvSVlFMCCUb36O/S9MCKRDI7QkRKD/E=
